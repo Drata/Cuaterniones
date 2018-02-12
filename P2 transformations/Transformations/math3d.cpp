@@ -136,3 +136,63 @@ MATRIX4 InverseOrthogonalMatrix(MATRIX3 A, VECTOR3D t)
 
 	return ret;
 }
+
+QUATERNION QuaternionFromAngleAxis(float angle, VECTOR3D axis) {
+	QUATERNION q;
+
+	q.w = angle;
+	q.x = axis.x;
+	q.y = axis.y;
+	q.z = axis.z;
+
+	return q;
+}
+
+QUATERNION QuaternionFromToVectors(VECTOR3D from, VECTOR3D to) {
+	QUATERNION q;
+	VECTOR3D axis = CrossProduct(from, to);
+	float cosTheta = DotProduct(Normalize(from), Normalize(to));
+	float angle = acos(cosTheta);
+
+	q = QuaternionFromAngleAxis(angle, axis);
+
+	return q;
+}
+
+QUATERNION Multiply(QUATERNION a, QUATERNION b) {
+	QUATERNION q;
+
+	q.w = (a.w*b.w - a.x*b.x - a.y*b.y - a.z*b.z);
+	q.x = (a.w*b.x + a.x*b.w + a.y*b.z - a.z*b.y);
+	q.y = (a.w*b.y - a.x*b.z + a.y*b.w + a.z*b.x);
+	q.z = (a.w*b.z + a.x*b.y - a.y*b.x + a.z*b.w);
+
+	return q;
+}
+
+QUATERNION Conjugate(QUATERNION a) {
+	QUATERNION q; 
+
+	q.w = a.w;
+	q.x = -a.x;
+	q.y = -a.y;
+	q.z = -a.z;
+
+	return q;
+}
+
+VECTOR3D RotateWithQuaternion(VECTOR3D a, QUATERNION q) {
+	QUATERNION res, qcon, p;
+	VECTOR3D v;
+
+	p = QuaternionFromAngleAxis(0, a);
+	qcon = Conjugate(q);
+	res = Multiply(q, p);
+	res = Multiply(res, qcon);
+
+	v.x = res.x;
+	v.y = res.y;
+	v.z = res.z;
+
+	return v;
+}
