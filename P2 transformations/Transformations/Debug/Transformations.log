@@ -1,0 +1,4 @@
+﻿  main.cpp
+c:\users\antonio.escudero\desktop\p2 transformations\p2 transformations\src\main.cpp(138): warning C4838: conversion from 'double' to 'GLfloat' requires a narrowing conversion
+  Transformations.vcxproj -> C:\Users\antonio.escudero\Desktop\P2 transformations\P2 transformations\Debug\Transformations.exe
+  Transformations.vcxproj -> C:\Users\antonio.escudero\Desktop\P2 transformations\P2 transformations\Debug\Transformations.pdb (Partial PDB)
