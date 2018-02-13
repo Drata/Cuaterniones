@@ -28,9 +28,11 @@ typedef struct {
 	float pitch; //Rotation around the X axis.
 	float roll; //Rotation around the Z axis.
 	QUATERNION orientation; //Cached quaternion equivalent of this euler object.
-};
+} EULER;
 
 FRUSTUM makeFrustum(double fovX, double aspectRatio, double nearValue, double farValue);
 MATRIX4 lookAt(VECTOR3D eyePosition, VECTOR3D target, VECTOR3D upVector);
+void updateEulerOrientation(EULER& euler);
+VECTOR3D getForward(EULER euler);
 
 #endif
