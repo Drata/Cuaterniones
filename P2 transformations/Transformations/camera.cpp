@@ -25,7 +25,8 @@ FRUSTUM makeFrustum(double fovX, double aspectRatio, double nearValue, double fa
 MATRIX4 lookAt(VECTOR3D eyePosition, VECTOR3D target, VECTOR3D upVector) 
 {
 	MATRIX3 m;
-
+	
+	//Sustituir forward por getForward en los parametros.
 	VECTOR3D forward = Substract(target, eyePosition);
 	VECTOR3D left = CrossProduct(forward, upVector);
 	VECTOR3D up = CrossProduct(left, forward);
@@ -43,7 +44,7 @@ void updateEulerOrientation(EULER& euler)
 
 	qYaw = QuaternionFromAngleAxis(euler.yaw, {0, 1, 0});
 	qPitch = QuaternionFromAngleAxis(euler.pitch, {1, 0, 0});
-	qRoll = QuaternionFromAngleAxis(euler.roll, {0, 0, 0});
+	qRoll = QuaternionFromAngleAxis(euler.roll, {0, 0, 1});
 
 	qAux = Multiply(qYaw, qRoll);
 	euler.orientation = Multiply(qPitch, qAux);
