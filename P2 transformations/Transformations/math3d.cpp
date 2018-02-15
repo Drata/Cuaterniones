@@ -140,10 +140,10 @@ MATRIX4 InverseOrthogonalMatrix(MATRIX3 A, VECTOR3D t)
 QUATERNION QuaternionFromAngleAxis(float angle, VECTOR3D axis) {
 	QUATERNION q;
 
-	q.w = angle;
-	q.x = axis.x;
-	q.y = axis.y;
-	q.z = axis.z;
+	q.w = cos(angle/2);
+	q.x = ax * sin(angle/2);
+	q.y = ay * sin(angle/2);
+	q.z = az * sin(angle/2);
 
 	return q;
 }
