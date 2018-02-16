@@ -26,6 +26,7 @@ float t = 0;
 
 CAMERA camera;
 FRUSTUM centerFrustum;
+EULER euler;
 
 
 double rotateangle = 0;
@@ -102,9 +103,10 @@ void Display(void)
 
     //gluLookAt(camera.position.x,camera.position.y,camera.position.z, target.x , target.y, target.z, camera.up.x,camera.up.y,camera.up.z);
 
+    updateEulerOrientation(euler);
 	
-	VECTOR3D unidad = { 1, 1, 1 };
-    MATRIX4 lookAtMatrix = lookAt(Add(camera.position, unidad), target, camera.up);
+    VECTOR3D unidad = { 1, 1, 1 };
+    MATRIX4 lookAtMatrix = lookAt(Add(camera.position, unidad), getForward(euler), camera.up);
     glLoadMatrixf(lookAtMatrix.m);
 
     glViewport(0,0,camera.screenwidth,camera.screenheight);
