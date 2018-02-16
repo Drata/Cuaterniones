@@ -16,6 +16,8 @@ void InitCamera(int);
 void HandleKeyboard(unsigned char key,int x, int y);
 void HandleReshape(int,int);
 void HandleIdle(void);
+void HandleMouseMotion(int x, int y);
+void HandleMousePassiveMotion(int x, int y);
 
 int fullscreen = FALSE;
 
@@ -23,6 +25,8 @@ int currentbutton = -1;
 double rotatespeed = 3;
 double tSpeed = 0.05;
 float t = 0;
+float prevX = MIN_INT;
+float prevY = MIN_INT;
 
 CAMERA camera;
 FRUSTUM centerFrustum;
@@ -166,6 +170,22 @@ void Lighting(void)
 void HandleKeyboard(unsigned char key,int x, int y)
 {
     switch (key) {
+	case 'w':
+	case 'W':
+		camera.position = Substract(camera.position, getForward(eulerCamera));
+		break;
+	case 's':
+	case 'S':
+		camera.position = Add(camera.position, getForward(eulerCamera));
+		break;
+	case 'a':
+	case 'A':
+		camera.position = Substract(camera.position, RotateWithQuaternion({ 1,0,0 }, euler.orientation));
+		break;
+	case 'd':
+	case 'D':
+		camera.position = Add(camera.position, RotateWithQuaternion({ 1,0,0 }, euler.orientation)
+		break;
         case ESC:
         case 'Q':
         case 'q':
@@ -219,9 +239,31 @@ void InitCamera(int mode)
     camera.direction.x = -camera.position.x;
     camera.direction.y = -camera.position.y;
     camera.direction.z = -camera.position.z;
+   
+    eulerCamera.yaw = 0.f;
+    eulerCamera.pitch = 0.f;
+    eulerCamera.roll = 0.f;
+    eulerCamera.orientation.s = 0.f;
+    eulerCamera.orientation.v = camera.direction;
     
     camera.up.x = 0;
     camera.up.y = 1;
-    camera.up.z = 0;
+    camera.up.z = 0;    
 }
 
+void HandleMouseMotion(int x, int y) {
+	HandleMousePassiveMotion(int x, int y);
+}
+
+void HandleMousePassiveMotion(int x, int y) {
+	int dX = x - prevX; int dY = y - prevY;
+	prevX = x; prevY = y;
+
+	float fdY = -std::fmax(std::fminf((float)dX, 1.f), -1.f);
+	float fdX = -std::fmax(std::fminf((float)dY, 1.f), -1.f);
+
+	eulerCamera.pitch += DTOR*fdX*0.2;
+	eulerCamera.pitch += DTOR*fdX*0.2;
+	eulerCamera.yaw += DTOR*fdY*0.2;
+	eulerCamera.yaw += DTOR*fdY*0.2;
+}
