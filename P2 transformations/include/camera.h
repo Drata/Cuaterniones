@@ -31,7 +31,7 @@ typedef struct {
 } EULER;
 
 FRUSTUM makeFrustum(double fovX, double aspectRatio, double nearValue, double farValue);
-MATRIX4 lookAt(VECTOR3D eyePosition, VECTOR3D target, VECTOR3D upVector);
+MATRIX4 lookAt(VECTOR3D eyePosition, VECTOR3D forward, VECTOR3D upVector);
 void updateEulerOrientation(EULER& euler);
 VECTOR3D getForward(EULER euler);
 
