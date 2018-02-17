@@ -13,5 +13,6 @@ typedef struct {
 void drawDot(VECTOR3D position, float sradius = 1, COLOUR color = grey);
 void drawLine(LINE line, COLOUR color = grey, bool doDrawDots = false);
 void drawAxis();
+void drawFloor();
 
 #endif

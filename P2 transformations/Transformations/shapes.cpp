@@ -78,6 +78,18 @@ void drawAxis() {
 	//Draws the lines of the axis.
 	drawLine(x, red);
 	drawLine(y, green);
-	drawLine(z, blue, true);
+	drawLine(z, blue);
 }
 
+void drawFloor() {
+	LINE x, z;
+
+	for (int i = -1000; i < 1000; i ++) {
+		//Initialize the values of the axis lines.
+		x.P = { {i*10.f, 0, -1000}, {i*10.f, 0, 1000 } };
+		z.P = { {-1000, 0, i*10.f} ,{ 1000, 0, i*10.f} };
+		//Draws the lines of the axis.
+		drawLine(x, blue);
+		drawLine(z, blue);
+	}
+}

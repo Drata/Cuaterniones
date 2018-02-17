@@ -26,14 +26,12 @@ MATRIX4 lookAt(VECTOR3D eyePosition, VECTOR3D forward, VECTOR3D upVector)
 {
 	MATRIX3 m;
 	
-	//Sustituir forward por getForward en los parametros.
-	VECTOR3D forward = forward;
-	VECTOR3D left = CrossProduct(forward, upVector);
-	VECTOR3D up = CrossProduct(left, forward);
+	VECTOR3D left = CrossProduct(upVector, forward);
+	VECTOR3D up = CrossProduct(forward, left);
 	
 	m.column0 = Normalize(left);
 	m.column1 = Normalize(up);
-	m.column2 = Normalize(MultiplyWithScalar(-1,forward));
+	m.column2 = Normalize(forward);
 
 	return InverseOrthogonalMatrix(m, eyePosition);
 }
@@ -46,8 +44,8 @@ void updateEulerOrientation(EULER& euler)
 	qPitch = QuaternionFromAngleAxis(euler.pitch, {1, 0, 0});
 	qRoll = QuaternionFromAngleAxis(euler.roll, {0, 0, 1});
 
-	qAux = Multiply(qYaw, qRoll);
-	euler.orientation = Multiply(qPitch, qAux);
+	qAux = Multiply(qYaw, qPitch);
+	euler.orientation = Multiply(qAux, qRoll);
 }
 
 VECTOR3D getForward(EULER euler) 

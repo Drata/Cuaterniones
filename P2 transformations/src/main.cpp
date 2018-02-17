@@ -25,8 +25,9 @@ int currentbutton = -1;
 double rotatespeed = 3;
 double tSpeed = 0.05;
 float t = 0;
-float prevX = MIN_INT;
-float prevY = MIN_INT;
+float prevX = 0;
+float prevY = 0;
+bool draw_axis = true;
 
 CAMERA camera;
 FRUSTUM centerFrustum;
@@ -52,6 +53,8 @@ int main(int argc,char **argv)
     glutReshapeWindow(camera.screenwidth,camera.screenheight);
     glutIdleFunc(HandleIdle);
     glutKeyboardFunc(HandleKeyboard);
+	glutPassiveMotionFunc(HandleMousePassiveMotion);
+	glutMotionFunc(HandleMouseMotion);
     Init();
     InitCamera(0);
     Lighting();
@@ -103,14 +106,14 @@ void Display(void)
     glMatrixMode(GL_MODELVIEW);
     
     glLoadIdentity();
-    VECTOR3D target = Add(camera.position, camera.direction);
+    //VECTOR3D target = Add(camera.position, camera.direction);
 
     //gluLookAt(camera.position.x,camera.position.y,camera.position.z, target.x , target.y, target.z, camera.up.x,camera.up.y,camera.up.z);
 
     updateEulerOrientation(euler);
 	
-    VECTOR3D unidad = { 1, 1, 1 };
-    MATRIX4 lookAtMatrix = lookAt(Add(camera.position, unidad), getForward(euler), camera.up);
+    //VECTOR3D unidad = { 1, 1, 1 };
+    MATRIX4 lookAtMatrix = lookAt(camera.position, getForward(euler), camera.up);
     glLoadMatrixf(lookAtMatrix.m);
 
     glViewport(0,0,camera.screenwidth,camera.screenheight);
@@ -133,6 +136,24 @@ void Render(void)
     glRotatef(rotateangle,0.0,1.0,0.0);
 
     drawAxis();
+
+	if (draw_axis == true) {
+		drawFloor();
+	}
+
+	drawDot({ 0, 20, 0 }, 1, red);
+	drawDot({ 5, 20, 0 }, 1, green);
+	drawDot({ 10, 20, 0 }, 1, blue);
+	drawDot({ 0, 15, 0 }, 1, red);
+	drawDot({ 5, 15, 0 }, 1, green);
+	drawDot({ 10, 15, 0 }, 1, blue);
+	drawDot({ 0, 10, 0 }, 1, red);
+	drawDot({ 5, 10, 0 }, 1, green);
+	drawDot({ 10, 10, 0 }, 1, blue);
+	drawDot({ 0, 5, 0 }, 1, red);
+	drawDot({ 5, 5, 0 }, 1, green);
+	drawDot({ 10, 5, 0 }, 1, blue);
+	
     
     glPopMatrix();
 }
@@ -172,11 +193,11 @@ void HandleKeyboard(unsigned char key,int x, int y)
     switch (key) {
 	case 'w':
 	case 'W':
-		camera.position = Substract(camera.position, getForward(eulerCamera));
+		camera.position = Substract(camera.position, getForward(euler));
 		break;
 	case 's':
 	case 'S':
-		camera.position = Add(camera.position, getForward(eulerCamera));
+		camera.position = Add(camera.position, getForward(euler));
 		break;
 	case 'a':
 	case 'A':
@@ -184,7 +205,11 @@ void HandleKeyboard(unsigned char key,int x, int y)
 		break;
 	case 'd':
 	case 'D':
-		camera.position = Add(camera.position, RotateWithQuaternion({ 1,0,0 }, euler.orientation)
+		camera.position = Add(camera.position, RotateWithQuaternion({ 1,0,0 }, euler.orientation));
+		break;
+	case 'f':
+	case 'F':
+		draw_axis = !draw_axis;
 		break;
         case ESC:
         case 'Q':
@@ -230,29 +255,32 @@ void HandleReshape(int w,int h)
 
 void InitCamera(int mode)
 {
-    camera.aperture = 90;
+    camera.aperture = 45;
 
     camera.position.x = 0;
-    camera.position.y = 0;
+    camera.position.y = 20;
     camera.position.z = 20;
     
     camera.direction.x = -camera.position.x;
     camera.direction.y = -camera.position.y;
     camera.direction.z = -camera.position.z;
    
-    eulerCamera.yaw = 0.f;
-    eulerCamera.pitch = 0.f;
-    eulerCamera.roll = 0.f;
-    eulerCamera.orientation.s = 0.f;
-    eulerCamera.orientation.v = camera.direction;
+	euler.yaw = 0.f;
+	euler.pitch = PI / 2;
+	euler.roll = 0.f;
+	
+	euler.orientation.w = 0.f;
+	euler.orientation.x = camera.direction.x;
+	euler.orientation.y = camera.direction.y;
+	euler.orientation.z = camera.direction.z;
     
-    camera.up.x = 0;
+	camera.up.x = 0;
     camera.up.y = 1;
     camera.up.z = 0;    
 }
 
 void HandleMouseMotion(int x, int y) {
-	HandleMousePassiveMotion(int x, int y);
+	HandleMousePassiveMotion(x, y);
 }
 
 void HandleMousePassiveMotion(int x, int y) {
@@ -262,8 +290,8 @@ void HandleMousePassiveMotion(int x, int y) {
 	float fdY = -std::fmax(std::fminf((float)dX, 1.f), -1.f);
 	float fdX = -std::fmax(std::fminf((float)dY, 1.f), -1.f);
 
-	eulerCamera.pitch += DTOR*fdX*0.2;
-	eulerCamera.pitch += DTOR*fdX*0.2;
-	eulerCamera.yaw += DTOR*fdY*0.2;
-	eulerCamera.yaw += DTOR*fdY*0.2;
+	euler.pitch += DTOR*fdX*0.2;
+	euler.pitch += DTOR*fdX*0.2;
+	euler.yaw += DTOR*fdY*0.2;
+	euler.yaw += DTOR*fdY*0.2;
 }

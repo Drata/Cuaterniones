@@ -1,19 +1,2 @@
 ﻿  shapes.cpp
-  math3d.cpp
-b:\users\adesc\documents\github\cuaterniones\p2 transformations\transformations\math3d.cpp(117): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-b:\users\adesc\documents\github\cuaterniones\p2 transformations\transformations\math3d.cpp(118): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-b:\users\adesc\documents\github\cuaterniones\p2 transformations\transformations\math3d.cpp(119): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-b:\users\adesc\documents\github\cuaterniones\p2 transformations\transformations\math3d.cpp(122): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-b:\users\adesc\documents\github\cuaterniones\p2 transformations\transformations\math3d.cpp(123): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-b:\users\adesc\documents\github\cuaterniones\p2 transformations\transformations\math3d.cpp(124): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-b:\users\adesc\documents\github\cuaterniones\p2 transformations\transformations\math3d.cpp(127): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-b:\users\adesc\documents\github\cuaterniones\p2 transformations\transformations\math3d.cpp(128): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-b:\users\adesc\documents\github\cuaterniones\p2 transformations\transformations\math3d.cpp(129): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-b:\users\adesc\documents\github\cuaterniones\p2 transformations\transformations\math3d.cpp(132): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-b:\users\adesc\documents\github\cuaterniones\p2 transformations\transformations\math3d.cpp(133): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-b:\users\adesc\documents\github\cuaterniones\p2 transformations\transformations\math3d.cpp(134): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-  camera.cpp
-  main.cpp
-b:\users\adesc\documents\github\cuaterniones\p2 transformations\src\main.cpp(138): warning C4838: la conversión de 'double' en 'GLfloat' requiere una conversión de restricción
-  Generando código...
   Transformations.vcxproj -> B:\Users\adesc\Documents\GitHub\Cuaterniones\P2 transformations\Debug\Transformations.exe
